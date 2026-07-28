@@ -1,110 +1,200 @@
-import { useEffect, useState } from 'react';
-import { Play, ArrowRight, Star } from 'lucide-react';
+import { useState, useEffect } from 'react';
 import { useTrending } from '../../../hooks/useTrending';
 import { getBackdropUrl, getPosterUrl } from '../../../api/tmdbClient';
+import starIcon from '../../../assets/star-five-stroke.png';
+import netflixIcon from '../../../assets/netflix-icon.png';
+import playIcon from '../../../assets/play-icon.png';
 import styles from './Hero.module.css';
 
+const FALLBACK = {
+  id: null,
+  title: 'The Witcher',
+  overview:
+    'Geralt of Rivia, a mutated monster-hunter for hire, journeys toward his destiny in a turbulent world where people often prove more wicked than beasts.',
+  backdropSrc: 'https://image.tmdb.org/t/p/original/jBJWZ0mUEhV74N5fH6w0t39B57C.jpg',
+  imageSrc: 'https://image.tmdb.org/t/p/w342/7vjaOZuR7j5wH136OmvEE76j151.jpg',
+  voteAverage: 8.1,
+};
+
+const FALLBACK_THUMBS = [
+  { imageSrc: 'https://image.tmdb.org/t/p/w342/ii0mGoGk7HeDMwmdbXjZYSM5QvT.jpg', title: 'Spider-Man' },
+  { imageSrc: 'https://image.tmdb.org/t/p/w342/gEU2QniE6E7vNIvxeKG6v6Ur464.jpg', title: 'Interstellar' },
+  { imageSrc: 'https://image.tmdb.org/t/p/w342/qJ2tWw751O12zs2n7JEtOFiJBE5.jpg', title: 'The Dark Knight' },
+  { imageSrc: 'https://image.tmdb.org/t/p/w342/edv5CZv0jVdHnxQDwz9262X82vR.jpg', title: 'Inception' },
+];
+
+function StarRow({ rating = 0 }) {
+  const stars = rating / 2;
+  return (
+    <div className={styles['star-row']}>
+      {[0, 1, 2, 3, 4].map((i) => {
+        const fill = Math.max(0, Math.min(1, stars - i)) * 100;
+        return (
+          <div key={i} className={styles['star-row__star']}>
+            <div
+              className={styles['star-row__mask-bg']}
+              style={{
+                WebkitMaskImage: `url(${starIcon})`,
+                maskImage: `url(${starIcon})`,
+              }}
+            />
+            <div
+              className={styles['star-row__mask-fill']}
+              style={{
+                WebkitMaskImage: `url(${starIcon})`,
+                maskImage: `url(${starIcon})`,
+                clipPath: `inset(0 ${100 - fill}% 0 0)`,
+              }}
+            />
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 function Hero() {
-  const { data: items, loading, error } = useTrending(4);
-  const [activeIndex, setActiveIndex] = useState(0);
+  const { data: items } = useTrending(4);
+  const [current, setCurrent] = useState(0);
 
-  // If the trending list refetches, reset activeIndex only when the list length changes.
-  // This avoids unnecessary state updates and any cascading render warnings.
+  const features = (items || []).slice(0, 4).map((item) => ({
+    id: item.id,
+    title: item.title || item.name,
+    overview: item.overview,
+    backdropSrc: getBackdropUrl(item.backdrop_path, 'original'),
+    imageSrc: getPosterUrl(item.poster_path, 'w342'),
+    voteAverage: item.vote_average,
+  }));
+
+  const hasData = features.length >= 4;
+
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setActiveIndex(0);
-  }, [items]);
+    if (!hasData) return undefined;
+    
+    // Auto-advance every 5 seconds
+    const timer = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % features.length);
+    }, 5000);
 
-  useEffect(() => {
-    if (items.length === 0) return undefined;
+    return () => clearInterval(timer);
+  }, [hasData, features.length]);
 
-    const intervalId = window.setInterval(() => {
-      setActiveIndex((currentIndex) => (currentIndex + 1) % items.length);
-    }, 2500);
+  const active = hasData ? features[current] : FALLBACK;
+  const order = hasData ? features : FALLBACK_THUMBS;
 
-    return () => {
-      window.clearInterval(intervalId);
-    };
-  }, [items.length]);
+  const goTo = (idx) => {
+    if (!hasData) return;
+    setCurrent(idx);
+  };
 
-  if (loading) {
-    return (
-      <section id="home" className={styles.hero}>
-        <p className={styles['hero__status']}>Loading featured titles…</p>
-      </section>
-    );
-  }
-
-  if (error || items.length === 0) {
-    return (
-      <section id="home" className={styles.hero}>
-        <p className={styles['hero__status']}>
-          Couldn't load featured titles right now{error ? `: ${error}` : '.'}
-        </p>
-      </section>
-    );
-  }
-
-  const active = items[activeIndex];
-  const title = active.title || active.name;
-  const rating = active.vote_average ? active.vote_average.toFixed(1) : '—';
+  const handleWatchNow = () => {
+    if (!active?.id) return;
+    console.log('Watch now:', active.id);
+  };
 
   return (
-    <section id="home" className={styles.hero}>
-      {/* key={active.id} forces a remount on change, which re-triggers the
-          fade-in keyframe below -> that's the "smooth transition" between banners */}
+    <section className={styles.hero}>
+      {/* ===== MOBILE: image block (fully visible, in normal flow) ===== */}
+      <div className={styles['hero__mobile-backdrop']}>
+        <img
+          src={active.backdropSrc || active.imageSrc}
+          className={styles['hero__mobile-backdrop-img']}
+          alt={active.title}
+        />
+        <div className={styles['hero__mobile-scrim']} />
+      </div>
+
+      {/* ===== DESKTOP: absolute background image ===== */}
       <div
-        key={active.id}
         className={styles['hero__backdrop']}
-        style={{ backgroundImage: `url(${getBackdropUrl(active.backdrop_path)})` }}
-      />
-      <div className={styles['hero__scrim']} />
+        style={{ backgroundImage: `url('${active.backdropSrc || active.imageSrc}')` }}
+      >
+        <div className={styles['hero__desktop-scrim-left']} />
+        <div className={styles['hero__desktop-scrim-bottom']} />
+      </div>
 
+      {/* Hero content area */}
       <div className={styles['hero__content']}>
-        <h1 className={styles['hero__title']}>{title}</h1>
-        <p className={styles['hero__description']}>{active.overview}</p>
-
-        <div className={styles['hero__meta']}>
-          <span className={styles['hero__stars']} aria-label={`Rated ${rating} out of 10`}>
-            {Array.from({ length: 5 }).map((_, i) => (
-              <Star key={i} size={16} fill="currentColor" strokeWidth={0} />
-            ))}
-          </span>
-          {/* Swap for your exported mask-group.png / netflix-icon.png when ready —
-              using plain text here since those are trademarked brand logos. */}
-          <span className={styles['hero__badge']}>IMDb {rating}</span>
-          <span className={`${styles['hero__badge']} ${styles['hero__badge--brand']}`}>NETFLIX</span>
+        {/* Mobile Stacking Cards — static order, only the current index pops up */}
+        <div className={styles['hero__mobile-posters']}>
+          {order.map((item, idx) => {
+            const isMain = idx === current;
+            return (
+              <button
+                key={idx}
+                type="button"
+                onClick={() => goTo(idx)}
+                className={[
+                  styles['hero__mobile-poster'],
+                  isMain ? styles['hero__mobile-poster--active'] : '',
+                  idx > 0 ? styles['hero__mobile-poster--overlap'] : '',
+                ].join(' ')}
+              >
+                <img src={item.imageSrc} className={styles['hero__mobile-poster-img']} alt="" />
+              </button>
+            );
+          })}
         </div>
 
+        {/* Heading */}
+        <h1 className={styles['hero__title']}>{active.title}</h1>
+
+        {/* Paragraph description */}
+        <p className={styles['hero__description']}>
+          {active.overview || FALLBACK.overview}
+        </p>
+
+        {/* Info Row (Stars + IMDb + Netflix) */}
+        <div className={styles['hero__meta']}>
+          <StarRow rating={active.voteAverage} />
+          
+          <div className={styles['hero__imdb-wrap']}>
+            <div className={styles['hero__imdb-badge']}>IMDb</div>
+            <span className={styles['hero__imdb-text']}>
+              {active.voteAverage ? active.voteAverage.toFixed(1) : FALLBACK.voteAverage}
+            </span>
+          </div>
+
+          <img src={netflixIcon} alt="Netflix" className={styles['hero__netflix-icon']} />
+        </div>
+
+        {/* Action Row */}
         <div className={styles['hero__actions']}>
-          <button type="button" className={styles['hero__btn-primary']}>
-            <Play size={16} fill="currentColor" strokeWidth={0} />
-            Watch Movie
+          <button
+            type="button"
+            onClick={handleWatchNow}
+            className={styles['hero__btn-primary']}
+          >
+            <img src={playIcon} className={styles['hero__btn-play-icon']} alt="" />
+            <span>Watch Movie</span>
           </button>
+          
           <button type="button" className={styles['hero__btn-secondary']}>
-            More Info
-            <ArrowRight size={16} strokeWidth={1.5} />
+            <span>More Info</span>
+            <span className={styles['hero__btn-arrow']}>→</span>
           </button>
         </div>
       </div>
 
-      <div className={styles['hero__posters']} role="tablist" aria-label="Featured titles">
-        {items.map((item, index) => (
-          <button
-            key={item.id}
-            type="button"
-            role="tab"
-            aria-selected={index === activeIndex}
-            aria-label={`Show ${item.title || item.name}`}
-            className={[
-              styles['hero__poster'],
-              index === activeIndex ? styles['hero__poster--active'] : '',
-            ].join(' ')}
-            onClick={() => setActiveIndex(index)}
-          >
-            <img src={getPosterUrl(item.poster_path)} alt="" />
-          </button>
-        ))}
+      {/* Desktop Stacking Cards — static order, only the current index pops up */}
+      <div className={styles['hero__posters']}>
+        {order.map((item, idx) => {
+          const isMain = idx === current;
+          return (
+            <button
+              key={idx}
+              type="button"
+              onClick={() => goTo(idx)}
+              className={[
+                styles['hero__poster'],
+                isMain ? styles['hero__poster--active'] : '',
+                idx > 1 ? styles['hero__poster--overlap-large'] : '',
+              ].join(' ')}
+            >
+              <img src={item.imageSrc} className={styles['hero__poster-img']} alt="" />
+            </button>
+          );
+        })}
       </div>
     </section>
   );
