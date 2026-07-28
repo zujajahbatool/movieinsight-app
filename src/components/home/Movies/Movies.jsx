@@ -8,13 +8,13 @@ import { useWatchlistStore } from '../../../store/useWatchlistStore';
 import styles from './Movies.module.css';
 
 const GENRES = [
-  { id: 18, label: 'Drama' },
+  { id: 16, label: 'Animation' },
   { id: 28, label: 'Action' },
   { id: 12, label: 'Adventure' },
   { id: 10749, label: 'Romance' },
   { id: 14, label: 'Fantasy' },
   { id: 35, label: 'Comedy' },
-  { id: 16, label: 'Animation' },
+  { id: 18, label: 'Drama' },
   { id: 53, label: 'Thriller' },
   { id: 9648, label: 'Mystery' },
   { id: 36, label: 'History' },
@@ -22,7 +22,7 @@ const GENRES = [
 ];
 
 function Movies() {
-  const [activeGenre, setActiveGenre] = useState(18); // Default to Drama (18)
+  const [activeGenre, setActiveGenre] = useState(16); // Default to Animation (16)
   const { data: items, loading, error } = useDiscoverByGenre(activeGenre, 'movie', 12);
   const watchlist = useWatchlistStore((state) => state.watchlist);
   const toggleMovie = useWatchlistStore((state) => state.toggleMovie);
