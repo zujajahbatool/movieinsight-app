@@ -2,8 +2,8 @@
    a fixed box so it works at any viewport width. */
 
 .hero {
-  position: absolute;
-  min-height: 100%;
+  position: relative;
+  min-height: 100vh;
   display: flex;
   align-items: flex-end;
   overflow: hidden;
@@ -151,29 +151,36 @@
   z-index: 1;
   display: flex;
   align-items: center;
-  gap: 1.25rem;
   margin-left: auto;
   padding: 0 clamp(1.5rem, 5vw, 4.6rem) clamp(2rem, 4vw, 3rem);
 }
 
 .hero__poster {
+  position: relative;
   flex: 0 0 auto;
   width: clamp(64px, 8vw, 122px);
   height: clamp(64px, 8vw, 122px);
+  margin-left: -28px;
   padding: 0;
-  border: 0.5px solid rgba(0, 100, 134, 0.98);
+  border: 0.5px solid rgba(0, 100, 134, 0.863);
   border-radius: var(--radius-lg);
   overflow: hidden;
   cursor: pointer;
   opacity: 0.65;
   transform: translateY(0);
-  transition: width 0.35s ease, height 0.35s ease, opacity 0.35s ease, transform 0.35s ease, box-shadow 0.35s ease;
+  transition: width 1s ease-in-out, height 1s ease-in-out, opacity 1s ease-in-out, transform 1s ease-in-out, box-shadow 1s ease-in-out;
+  z-index: 1;
+}
+
+.hero__poster:first-child {
+  margin-left: 0;
 }
 
 .hero__poster img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  background-repeat: no-repeat;
   display: block;
 }
 
@@ -181,9 +188,15 @@
   width: clamp(88px, 11vw, 174px);
   height: clamp(88px, 11vw, 174px);
   opacity: 1;
+  z-index: 2;
   border-width: 1px;
   box-shadow: 0px 18px 50px -14px rgba(112, 144, 176, 0.45);
   transform: translateY(-10px);
+}
+
+.hero__poster--active ~ .hero__poster,
+.hero__poster--active + .hero__poster {
+  z-index: 1;
 }
 
 @media (max-width: 900px) {

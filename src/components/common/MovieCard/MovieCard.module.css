@@ -10,7 +10,10 @@
   aspect-ratio: 2 / 3;
   border-radius: var(--radius-md);
   overflow: hidden;
-  background: var(--color-surface-raised);
+  background: var(--bg-page);
+  /* Figma's inset shadow on the poster itself — reads as a subtle
+     top-left "notch" without literally clipping the corner off */
+  box-shadow: inset 5px -5px 15px 0 rgba(0, 0, 0, 0.4);
 }
 
 .movie-card__poster {
@@ -19,34 +22,37 @@
   object-fit: cover;
   display: block;
   transition: transform 0.25s ease;
+  clip-path: polygon(0 44px, 44px 44px, 44px 0, 100% 0, 100% 100%, 0 100%);
 }
 
 .movie-card__poster-wrap:hover .movie-card__poster {
   transform: scale(1.04);
 }
 
+/* The frosted-glass corner tile from Figma (group behind the +/check icon) */
 .movie-card__add-btn {
   position: absolute;
-  top: var(--space-xs);
-  left: var(--space-xs);
-  width: 1.75rem;
-  height: 1.75rem;
-  border-radius: var(--radius-pill);
+  top: 0;
+  left: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
   border: none;
-  background: rgba(19, 24, 38, 0.75);
+  background: var(--color-surface);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   color: var(--color-text-primary);
-  font-size: var(--fs-md);
-  line-height: 1;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  webkit-backdrop-filter: blur(4px);
   transition: background 0.15s ease, color 0.15s ease;
+  z-index: 2;
 }
 
 .movie-card__add-btn:hover {
   background: var(--color-accent);
+  color: #fff;
 }
 
 .movie-card__add-btn--active {

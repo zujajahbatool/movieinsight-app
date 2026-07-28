@@ -1,3 +1,4 @@
+import { Plus, Check } from 'lucide-react';
 import styles from './MovieCard.module.css';
 
 /**
@@ -41,7 +42,7 @@ function MovieCard({
           onClick={onAddToggle}
           aria-label={isAdded ? `Remove ${title} from list` : `Add ${title} to list`}
         >
-          {isAdded ? '✓' : '+'}
+          {isAdded ? <Check size={14} strokeWidth={2.5} /> : <Plus size={14} strokeWidth={2.5} />}
         </button>
 
         {typeof progress === 'number' && (

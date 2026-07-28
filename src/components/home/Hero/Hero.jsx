@@ -11,6 +11,7 @@ function Hero() {
   // If the trending list refetches, reset activeIndex only when the list length changes.
   // This avoids unnecessary state updates and any cascading render warnings.
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setActiveIndex(0);
   }, [items]);
 
