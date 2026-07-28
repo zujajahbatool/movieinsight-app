@@ -1,19 +1,29 @@
 .movie-card {
-  flex: 0 0 clamp(140px, 15vw, 180px);
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-xs);
+  position: relative;
+  flex: 0 0 112px;
+  width: 112px;
+  height: 160px;
+  background: var(--bg-page);
+  border-radius: 8px;
+  cursor: pointer;
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .movie-card {
+    flex: 0 0 208px;
+    width: 208px;
+    height: 296px;
+    border-radius: 16px;
+  }
 }
 
 .movie-card__poster-wrap {
-  position: relative;
-  aspect-ratio: 2 / 3;
-  border-radius: var(--radius-md);
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   overflow: hidden;
-  background: var(--bg-page);
-  /* Figma's inset shadow on the poster itself — reads as a subtle
-     top-left "notch" without literally clipping the corner off */
-  box-shadow: inset 5px -5px 15px 0 rgba(0, 0, 0, 0.4);
 }
 
 .movie-card__poster {
@@ -21,43 +31,73 @@
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: transform 0.25s ease;
-  clip-path: polygon(0 44px, 44px 44px, 44px 0, 100% 0, 100% 100%, 0 100%);
+  transition: transform 0.5s ease-out;
 }
 
-.movie-card__poster-wrap:hover .movie-card__poster {
-  transform: scale(1.04);
+.movie-card:hover .movie-card__poster {
+  transform: scale(1.05);
 }
 
-/* The frosted-glass corner tile from Figma (group behind the +/check icon) */
-.movie-card__add-btn {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 36px;
-  height: 36px;
-  border-radius: var(--radius-md);
-  border: none;
-  background: var(--color-surface);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  color: var(--color-text-primary);
-  cursor: pointer;
+.movie-card__placeholder {
+  width: 100%;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.15s ease, color 0.15s ease;
-  z-index: 2;
+  background: var(--color-surface-raised);
+  text-align: center;
+  padding: var(--space-xs);
+}
+
+.movie-card__placeholder-text {
+  font-size: var(--fs-xs);
+  color: var(--color-text-secondary);
+  font-weight: var(--fw-medium);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.movie-card__add-btn {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.2) 100%);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  
+  /* Mobile size */
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+}
+
+@media (min-width: 768px) {
+  .movie-card__add-btn {
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+  }
 }
 
 .movie-card__add-btn:hover {
   background: var(--color-accent);
-  color: #fff;
+  border-color: transparent;
+  transform: scale(1.05);
 }
 
 .movie-card__add-btn--active {
   background: var(--color-accent);
-  color: #fff;
+  border-color: transparent;
 }
 
 .movie-card__progress-track {
@@ -67,31 +107,10 @@
   right: 0;
   height: 4px;
   background: rgba(255, 255, 255, 0.2);
+  z-index: 20;
 }
 
 .movie-card__progress-fill {
   height: 100%;
   background: var(--color-accent);
-}
-
-.movie-card__meta {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-xs);
-}
-
-.movie-card__title {
-  font-size: var(--fs-sm);
-  font-weight: var(--fw-medium);
-  color: var(--color-text-primary);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.movie-card__rating {
-  flex-shrink: 0;
-  font-size: var(--fs-xs);
-  color: var(--color-star);
 }
