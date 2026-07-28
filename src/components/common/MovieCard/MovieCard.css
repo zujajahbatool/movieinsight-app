@@ -1,0 +1,91 @@
+.movie-card {
+  flex: 0 0 clamp(140px, 15vw, 180px);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.movie-card__poster-wrap {
+  position: relative;
+  aspect-ratio: 2 / 3;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--color-surface-raised);
+}
+
+.movie-card__poster {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.25s ease;
+}
+
+.movie-card__poster-wrap:hover .movie-card__poster {
+  transform: scale(1.04);
+}
+
+.movie-card__add-btn {
+  position: absolute;
+  top: var(--space-xs);
+  left: var(--space-xs);
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: var(--radius-pill);
+  border: none;
+  background: rgba(19, 24, 38, 0.75);
+  color: var(--color-text-primary);
+  font-size: var(--fs-md);
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  webkit-backdrop-filter: blur(4px);
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.movie-card__add-btn:hover {
+  background: var(--color-accent);
+}
+
+.movie-card__add-btn--active {
+  background: var(--color-accent);
+  color: #fff;
+}
+
+.movie-card__progress-track {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.movie-card__progress-fill {
+  height: 100%;
+  background: var(--color-accent);
+}
+
+.movie-card__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-xs);
+}
+
+.movie-card__title {
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+  color: var(--color-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.movie-card__rating {
+  flex-shrink: 0;
+  font-size: var(--fs-xs);
+  color: var(--color-star);
+}

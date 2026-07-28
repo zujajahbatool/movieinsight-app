@@ -1,0 +1,37 @@
+/* ============================================================
+   Design tokens — dark theme is the default (:root).
+   Light theme overrides live under [data-theme='light'].
+   App.jsx sets data-theme on <html> based on useThemeStore.
+   ============================================================ */
+
+:root {
+  /* Brand */
+  --accent-blue: #228EE5;
+  --accent-blue-soft: rgba(34, 142, 229, 0.18);
+  --star-yellow: rgba(229, 219, 34, 0.84);
+
+  /* Surfaces */
+  --bg-page: #030A1B;
+  --surface-glass: rgba(26, 25, 25, 0.3);
+  --surface-card: rgba(255, 255, 255, 0.06);
+
+  /* Text */
+  --text-primary: #EBFAFF;
+  --text-secondary: rgba(255, 255, 255, 0.75);
+
+  /* Radii */
+  --radius-lg: 20px;
+  --radius-pill: 28px;
+
+  /* Type */
+  --font-display: 'Lato', sans-serif;
+}
+
+[data-theme='light'] {
+  --bg-page: #F5FAFF;
+  --surface-glass: rgba(255, 255, 255, 0.55);
+  --surface-card: rgba(3, 10, 27, 0.04);
+
+  --text-primary: #0A1A2B;
+  --text-secondary: rgba(10, 26, 43, 0.72);
+}

@@ -1,0 +1,66 @@
+.scroll-row {
+  padding: var(--space-2xl) 0;
+}
+
+.scroll-row__filters {
+  display: flex;
+  gap: var(--space-sm);
+  overflow-x: auto;
+  margin-bottom: var(--space-lg);
+  scrollbar-width: none;
+}
+
+.scroll-row__filters::-webkit-scrollbar {
+  display: none;
+}
+
+.scroll-row__viewport {
+  position: relative;
+}
+
+.scroll-row__track {
+  display: flex;
+  gap: var(--space-md);
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+  padding-bottom: var(--space-2xs);
+}
+
+.scroll-row__track::-webkit-scrollbar {
+  display: none;
+}
+
+.scroll-row__arrow {
+  display: none;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text-primary);
+  font-size: var(--fs-lg);
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+}
+
+.scroll-row__arrow--left {
+  left: -1.25rem;
+}
+
+.scroll-row__arrow--right {
+  right: -1.25rem;
+}
+
+/* Arrow nav only makes sense once there's room to show it without
+   overlapping content — bring it in on larger viewports. */
+@media (min-width: 768px) {
+  .scroll-row__arrow {
+    display: flex;
+  }
+}

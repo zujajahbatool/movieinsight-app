@@ -1,0 +1,7 @@
+.app {
+  min-height: 100vh;
+  background: var(--bg-page);
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+

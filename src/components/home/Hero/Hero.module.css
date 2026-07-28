@@ -1,0 +1,198 @@
+/* Figma hero section: 1440x762. Translated to a fluid section instead of
+   a fixed box so it works at any viewport width. */
+
+.hero {
+  position: absolute;
+  min-height: 100%;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  background: var(--bg-page);
+}
+
+.hero__status {
+  padding: 4rem clamp(1.5rem, 5vw, 4.6rem);
+  color: var(--text-secondary);
+  font-family: var(--font-display);
+}
+
+.hero__backdrop {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  animation: hero-fade-in 0.6s ease both;
+}
+
+@keyframes hero-fade-in {
+  from {
+    opacity: 0;
+    transform: scale(1.02);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.hero__scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(3, 10, 27, 0.92) 8%,
+    rgba(3, 10, 27, 0.55) 45%,
+    rgba(3, 10, 27, 0.15) 78%
+  );
+}
+
+.hero__content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-width: min(553px, 90%);
+  padding: 0 clamp(1.5rem, 5vw, 4.6rem) clamp(2rem, 4vw, 3rem);
+}
+
+.hero__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.75rem, 3.2vw, 3rem);
+  color: #ebfaff; /* stays light — sits over a dark scrim regardless of theme */
+  line-height: 1.1;
+}
+
+.hero__description {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.85);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.hero__meta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.hero__stars {
+  display: flex;
+  gap: 0.2rem;
+  color: var(--star-yellow);
+}
+
+.hero__badge {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: #000;
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  background: rgb(226, 182, 35);
+}
+
+.hero__badge--brand {
+  background: none;
+  color: #e50914;
+  letter-spacing: 0.05em;
+  padding-inline: 0;
+}
+
+.hero__actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.hero__btn-primary,
+.hero__btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  height: 40px;
+  padding: 0 1.4rem;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.hero__btn-primary {
+  border: none;
+  background: var(--accent-blue);
+  color: #ebfaff;
+}
+
+.hero__btn-primary:hover {
+  filter: brightness(1.08);
+}
+
+.hero__btn-secondary {
+  border: 1px solid var(--accent-blue);
+  background: transparent;
+  color: #ebfaff;
+}
+
+/* Poster carousel — Figma: 122x122 inactive posters, active one 174x174 */
+.hero__posters {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin-left: auto;
+  padding: 0 clamp(1.5rem, 5vw, 4.6rem) clamp(2rem, 4vw, 3rem);
+}
+
+.hero__poster {
+  flex: 0 0 auto;
+  width: clamp(64px, 8vw, 122px);
+  height: clamp(64px, 8vw, 122px);
+  padding: 0;
+  border: 0.5px solid rgba(0, 100, 134, 0.98);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  cursor: pointer;
+  opacity: 0.65;
+  transform: translateY(0);
+  transition: width 0.35s ease, height 0.35s ease, opacity 0.35s ease, transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.hero__poster img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.hero__poster--active {
+  width: clamp(88px, 11vw, 174px);
+  height: clamp(88px, 11vw, 174px);
+  opacity: 1;
+  border-width: 1px;
+  box-shadow: 0px 18px 50px -14px rgba(112, 144, 176, 0.45);
+  transform: translateY(-10px);
+}
+
+@media (max-width: 900px) {
+  .hero {
+    align-items: center;
+    padding-top: 6rem;
+  }
+
+  .hero__posters {
+    display: none;
+  }
+}

@@ -1,0 +1,119 @@
+/* Figma: header 1440x108, header-glass 1232x80 centered, border-radius 20,
+   0.5px gradient border, rgba(26,25,25,0.3) bg, blur(8px).
+   Fixed widths -> flex row with clamp()'d padding so it survives resize. */
+
+.navbar {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+}
+
+.navbar__glass {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(0.75rem, 2vw, 1.5rem);
+  width: min(1232px, 100%);
+  padding: 0.5rem clamp(1rem, 2vw, 1.75rem);
+  margin-top: 20px;
+  border-radius: var(--radius-lg);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid #228ee5;
+  backdrop-filter: blur(8px);
+
+  /* gradient border trick: two backgrounds, one clipped to padding-box (fill),
+     one clipped to border-box (the 0.5px gradient ring) */
+  background:
+    linear-gradient(var(--surface-glass), var(--surface-glass)), padding-box;
+}
+
+.navbar__logo {
+  height: clamp(2.25rem, 4.5vw, 3.25rem);
+  width: auto;
+  flex-shrink: 0;
+}
+
+.navbar__links {
+  display: flex;
+  align-items: center;
+  gap: clamp(1rem, 2vw, 1.5rem);
+  flex-wrap: wrap;
+}
+
+.navbar__link {
+  position: relative;
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 0.35rem 0 0.65rem;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(0.9rem, 1.1vw, 1.25rem);
+  color: var(--text-primary);
+  opacity: 0.85;
+  transition: opacity 0.2s ease;
+}
+
+.navbar__link:hover {
+  opacity: 1;
+}
+
+.navbar__link--active {
+  opacity: 1;
+}
+
+.navbar__indicator {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 4px;
+  border-radius: 50px;
+  background: var(--accent-blue);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+.navbar__actions {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.85rem, 1.6vw, 2rem);
+  flex-shrink: 0;
+}
+
+.navbar__icon-btn {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: none;
+  color: var(--text-primary);
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+}
+
+.navbar__icon-btn:hover {
+  background: var(--surface-card);
+}
+
+.navbar__icon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+@media (max-width: 860px) {
+  .navbar__links {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+    padding-top: 0.5rem;
+  }
+
+  .navbar__glass {
+    flex-wrap: wrap;
+    row-gap: 0.5rem;
+  }
+}
