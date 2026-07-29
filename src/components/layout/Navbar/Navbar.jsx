@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { List, X } from 'lucide-react';
 import { useThemeStore } from '../../../store/useThemeStore';
 import logoDark from '../../../assets/logo-dark-theme.png';
 import logoLight from '../../../assets/logo-light-theme.png';
@@ -27,6 +28,7 @@ const NAV_LINKS = [
 function Navbar() {
   const { theme, toggleTheme } = useThemeStore();
   const [activeLabel, setActiveLabel] = useState('Home');
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleNavClick = (link) => {
     setActiveLabel(link.label);
@@ -42,8 +44,25 @@ function Navbar() {
   return (
     <header className={styles.navbar}>
       <div className={styles['navbar__glass']}>
+        {/* Mobile menu and search controls (left on mobile, hidden on desktop) */}
+        <div className={styles['navbar__mobile-left']}>
+          <button
+            type="button"
+            className={styles['navbar__icon-btn']}
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+          >
+            {isMenuOpen ? <X className={styles['navbar__hamburger-icon']} /> : <List className={styles['navbar__hamburger-icon']} />}
+          </button>
+          <button type="button" className={styles['navbar__icon-btn']} aria-label="Search">
+            <img className={styles['navbar__icon']} src={searchSrc} alt="Search" />
+          </button>
+        </div>
+
+        {/* Logo (left on desktop, right on mobile) */}
         <img className={styles['navbar__logo']} src={logoSrc} alt="Omni logo" />
 
+        {/* Navigation Links (center on desktop, hidden on mobile) */}
         <nav className={styles['navbar__links']} aria-label="Primary">
           {NAV_LINKS.map((link) => (
             <button
@@ -61,6 +80,7 @@ function Navbar() {
           ))}
         </nav>
 
+        {/* Action icons (right on desktop, hidden on mobile) */}
         <div className={styles['navbar__actions']}>
           <button type="button" className={styles['navbar__icon-btn']} aria-label="Search">
             <img className={styles['navbar__icon']} src={searchSrc} alt="Search" />
@@ -80,6 +100,47 @@ function Navbar() {
             <img className={styles['navbar__icon']} src={themeIconSrc} alt={theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'} />
           </button>
         </div>
+
+        {/* Mobile Dropdown Menu (visible only when isMenuOpen is true on mobile) */}
+        {isMenuOpen && (
+          <div className={styles['navbar__dropdown']}>
+            <nav className={styles['navbar__dropdown-links']} aria-label="Mobile Navigation">
+              {NAV_LINKS.map((link) => (
+                <button
+                  key={link.label}
+                  type="button"
+                  className={[
+                    styles['navbar__dropdown-link'],
+                    activeLabel === link.label ? styles['navbar__dropdown-link--active'] : '',
+                  ].join(' ')}
+                  onClick={() => {
+                    handleNavClick(link);
+                    setIsMenuOpen(false);
+                  }}
+                >
+                  {link.label}
+                </button>
+              ))}
+            </nav>
+            <div className={styles['navbar__dropdown-divider']} />
+            <div className={styles['navbar__dropdown-actions']}>
+              <button type="button" className={styles['navbar__icon-btn']} aria-label="Notifications">
+                <img className={styles['navbar__icon']} src={bellSrc} alt="Notifications" />
+              </button>
+              <button type="button" className={styles['navbar__icon-btn']} aria-label="Account">
+                <img className={styles['navbar__icon']} src={userSrc} alt="Account" />
+              </button>
+              <button
+                type="button"
+                className={styles['navbar__icon-btn']}
+                aria-label={theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}
+                onClick={toggleTheme}
+              >
+                <img className={styles['navbar__icon']} src={themeIconSrc} alt={theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'} />
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </header>
   );

@@ -97,16 +97,109 @@
   height: 20px;
   object-fit: contain;
 }
+.navbar__mobile-left {
+  display: none;
+}
+
+.navbar__hamburger-icon {
+  width: 24px;
+  height: 24px;
+  color: var(--text-primary);
+}
+
+/* Mobile Dropdown styles */
+.navbar__dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  right: 0;
+  border-radius: var(--radius-lg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid #228de588;
+  background: linear-gradient(var(--surface-glass), var(--surface-glass)), padding-box;
+  padding: 1.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  z-index: 99;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  animation: slideDown 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.navbar__dropdown-links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.navbar__dropdown-link {
+  border: none;
+  background: none;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  opacity: 0.85;
+  cursor: pointer;
+  padding: 0.35rem 0;
+  transition: opacity 0.2s, color 0.2s;
+  position: relative;
+  width: 100%;
+  text-align: center;
+}
+
+.navbar__dropdown-link:hover,
+.navbar__dropdown-link--active {
+  opacity: 1;
+  color: var(--accent-blue);
+}
+
+.navbar__dropdown-divider {
+  width: 80%;
+  height: 1px;
+  background: rgba(34, 142, 229, 0.25);
+  margin: 0.25rem 0;
+}
+
+.navbar__dropdown-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  width: 100%;
+}
+
 @media (max-width: 860px) {
   .navbar__links {
-    order: 3;
-    width: 100%;
-    justify-content: center;
-    padding-top: 0.5rem;
+    display: none;
+  }
+
+  .navbar__actions {
+    display: none;
+  }
+
+  .navbar__mobile-left {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
   }
 
   .navbar__glass {
-    flex-wrap: wrap;
-    row-gap: 0.5rem;
+    position: relative; /* Maintain relative positioning for absolute dropdown */
   }
 }
