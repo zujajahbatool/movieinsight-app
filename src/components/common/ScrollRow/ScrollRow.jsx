@@ -10,7 +10,7 @@ import styles from './ScrollRow.module.css';
  * left/right arrow buttons. It doesn't know what's inside the track —
  * Trends passes MovieCards, a future section could pass anything.
  */
-function ScrollRow({ title, onSeeMore, filters, children }) {
+function ScrollRow({ title, onSeeMore, rightContent, filters, children }) {
   const trackRef = useRef(null);
 
   const scrollBy = (direction) => {
@@ -22,7 +22,7 @@ function ScrollRow({ title, onSeeMore, filters, children }) {
 
   return (
     <section className={styles['scroll-row']}>
-      <SectionHeader title={title} onSeeMore={onSeeMore} />
+      <SectionHeader title={title} onSeeMore={onSeeMore} rightContent={rightContent} />
 
       {filters && <div className={styles['scroll-row__filters']}>{filters}</div>}
 
