@@ -43,4 +43,46 @@ function Button({
   );
 }
 
+export function ToggleButton({
+  leftLabel = 'Series',
+  rightLabel = 'Movies',
+  isRightActive = false,
+  onChange,
+  className = '',
+}) {
+  const handleToggle = (val) => {
+    if (onChange) onChange(val);
+  };
+
+  return (
+    <div className={`${styles.toggle} ${className}`} onClick={() => handleToggle(!isRightActive)}>
+      <div
+        className={`${styles.toggle__pill} ${isRightActive ? styles['toggle__pill--right'] : styles['toggle__pill--left']}`}
+      />
+      <button
+        type="button"
+        className={`${styles.toggle__btn} ${!isRightActive ? styles['toggle__btn--active'] : ''}`}
+        onClick={(e) => {
+          e.stopPropagation();
+          handleToggle(false);
+        }}
+      >
+        {leftLabel}
+      </button>
+      <button
+        type="button"
+        className={`${styles.toggle__btn} ${isRightActive ? styles['toggle__btn--active'] : ''}`}
+        onClick={(e) => {
+          e.stopPropagation();
+          handleToggle(true);
+        }}
+      >
+        {rightLabel}
+      </button>
+    </div>
+  );
+}
+
+Button.Toggle = ToggleButton;
+
 export default Button;
