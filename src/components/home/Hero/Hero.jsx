@@ -5,6 +5,7 @@ import starIcon from '../../../assets/star-five-stroke.png';
 import netflixIcon from '../../../assets/netflix-icon.png';
 import playIcon from '../../../assets/play-icon.png';
 import styles from './Hero.module.css';
+import Button from '../../common/Button/Button';
 
 const FALLBACK = {
   id: null,
@@ -160,19 +161,22 @@ function Hero() {
 
         {/* Action Row */}
         <div className={styles['hero__actions']}>
-          <button
-            type="button"
+          <Button
+            variant="primary"
             onClick={handleWatchNow}
             className={styles['hero__btn-primary']}
+            leftIcon={<img src={playIcon} className={styles['hero__btn-play-icon']} alt="" />}
           >
-            <img src={playIcon} className={styles['hero__btn-play-icon']} alt="" />
-            <span>Watch Movie</span>
-          </button>
+            Watch Movie
+          </Button>
           
-          <button type="button" className={styles['hero__btn-secondary']}>
-            <span>More Info</span>
-            <span className={styles['hero__btn-arrow']}>→</span>
-          </button>
+          <Button
+            variant="secondary"
+            className={styles['hero__btn-secondary']}
+            rightIcon={<span className={styles['hero__btn-arrow']}>→</span>}
+          >
+            More Info
+          </Button>
         </div>
       </div>
 
