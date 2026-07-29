@@ -3,13 +3,7 @@
     "development"
   ],
   "hints": {
-    "compat-api/css": [
-      "default",
-      {
-        "ignore": [
-          "-webkit-backdrop-filter"
-        ]
-      }
-    ]
+    "compat-api/css": "off",
+    "css-prefix-order": "off"
   }
 }
