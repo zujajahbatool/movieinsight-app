@@ -1,0 +1,174 @@
+/* Base styles */
+.button {
+  font-family: var(--font-display);
+  font-size: var(--fs-md);
+  font-weight: var(--fw-medium);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  border: none;
+  background: none;
+  color: var(--color-text-primary);
+  text-decoration: none;
+  outline: none;
+  user-select: none;
+}
+
+.button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Icon layout */
+.button__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Size Variants */
+.button--sm {
+  font-size: var(--fs-xs);
+  padding: 0.375rem 0.75rem;
+  border-radius: var(--radius-md);
+}
+
+.button--md {
+  font-size: var(--fs-sm);
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-md);
+}
+
+.button--lg {
+  font-size: var(--fs-md);
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius-lg);
+}
+
+/* Primary Variant */
+.button--primary {
+  background: var(--color-accent);
+  color: #ebfaff;
+  font-weight: 500;
+  border-radius: var(--radius-pill);
+}
+
+.button--primary:hover:not(:disabled) {
+  background: var(--color-accent-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(34, 142, 229, 0.25);
+}
+
+.button--primary:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+/* Secondary Variant */
+.button--secondary {
+  border: 1px solid var(--color-border);
+  background: transparent;
+  color: var(--color-text-primary);
+  border-radius: var(--radius-pill);
+}
+
+.button--secondary:hover:not(:disabled) {
+  background: var(--color-surface);
+  transform: translateY(-1px);
+}
+
+.button--secondary:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+/* Link Variant (See More style) */
+.button--link {
+  background: none;
+  border: none;
+  color: var(--color-accent);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-bold);
+  padding: 0;
+  border-radius: 0;
+  gap: var(--space-2xs);
+  white-space: nowrap;
+}
+
+.button--link:hover:not(:disabled) {
+  color: var(--color-accent-hover);
+  transform: translateX(2px);
+}
+
+/* Pill Variant (Genre Pill style) */
+.button--pill {
+  padding: 12px 28px;
+  border-radius: 25px;
+  border: 1px solid var(--color-pill-border);
+  background: var(--color-pill-unselected-bg);
+  color: var(--color-text-primary);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+  white-space: nowrap;
+}
+
+.button--pill:hover:not(:disabled) {
+  background: rgba(236, 91, 170, 0.1);
+  border-color: var(--color-pill-selected);
+  transform: translateY(-1px);
+}
+
+/* Selected Pill state */
+.button--selected {
+  background: var(--color-pill-selected) !important;
+  border-color: transparent !important;
+  color: #ffffff !important;
+}
+
+.button--selected:hover:not(:disabled) {
+  background: var(--color-pill-selected) !important;
+  transform: none;
+}
+
+/* Gradient Variant (Pricing Continue button) */
+.button--gradient {
+  background: linear-gradient(180deg, #0CC2FF 0%, #275EE7 100%);
+  border: 1px solid rgba(34, 142, 229, 1);
+  color: #EBFAFF;
+  font-weight: 700;
+  border-radius: 12px;
+  box-shadow: 0px 4px 14px rgba(34, 142, 229, 0.25);
+  padding: 10px;
+}
+
+.button--gradient:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0px 8px 20px rgba(34, 142, 229, 0.4);
+  border-color: #0CC2FF;
+}
+
+.button--gradient:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+/* Suggested Variant (Pricing Middle Continue button) */
+.button--suggested {
+  background: rgba(235, 250, 255, 1);
+  color: rgba(34, 142, 229, 1);
+  font-weight: 700;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  box-shadow: 0px 8px 24px rgba(34, 142, 229, 0.16);
+}
+
+.button--suggested:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0px 12px 28px rgba(235, 250, 255, 0.35);
+  background: #ffffff;
+}
+
+.button--suggested:active:not(:disabled) {
+  transform: translateY(0);
+}
