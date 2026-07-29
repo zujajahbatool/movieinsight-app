@@ -6,6 +6,10 @@ import Movies from './components/home/Movies/Movies';
 import GoldenGlobeBanner from './components/home/GoldenGlobeBanner/GoldenGlobeBanner';
 import Series from './components/home/Series/Series';
 import Pricing from './components/home/Pricing/Pricing';
+import Collections from './components/home/Collections/Collections';
+import ContinueWatching from './components/home/ContinueWatching/ContinueWatching';
+import Characters from './components/home/Characters/Characters';
+import KidsBanner from './components/home/KidsBanner/KidsBanner';
 import { useThemeStore } from './store/useThemeStore';
 import './App.css';
 
@@ -27,6 +31,10 @@ function App() {
         <GoldenGlobeBanner />
         <Series />
         <Pricing />
+        <Collections />
+        <ContinueWatching />
+        <Characters />
+        <KidsBanner />
       </main>
     </div>
   );
