@@ -1,0 +1,39 @@
+.kids-banner {
+  margin: var(--space-xl) 0;
+  width: 100%;
+}
+
+.kids-banner__container {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+  cursor: pointer;
+}
+
+/* Premium hover interaction */
+.kids-banner__container:hover {
+  transform: scale(1.008);
+  box-shadow: 0 12px 32px rgba(34, 142, 229, 0.25);
+  border-color: rgba(34, 142, 229, 0.4);
+}
+
+.kids-banner__image {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.kids-banner__container:hover .kids-banner__image {
+  transform: scale(1.01);
+}
+
+[data-theme='light'] .kids-banner__container {
+  box-shadow: 0 8px 24px rgba(10, 26, 43, 0.1);
+}
+
+[data-theme='light'] .kids-banner__container:hover {
+  box-shadow: 0 12px 32px rgba(34, 142, 229, 0.15);
+}
