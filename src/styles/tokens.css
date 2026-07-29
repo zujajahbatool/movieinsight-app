@@ -72,8 +72,9 @@
 [data-theme='light'] {
   --bg-page: #F5FAFF;
   --surface-glass: rgba(255, 255, 255, 0.55);
-  --surface-card: rgba(3, 10, 27, 0.04);
+  --surface-card: rgba(228, 231, 238, 0.479);
 
   --text-primary: #0A1A2B;
   --text-secondary: rgba(10, 26, 43, 0.72);
+  --color-pill-unselected-bg: rgb(247, 248, 250);
 }
