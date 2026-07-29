@@ -1,0 +1,11 @@
+.series {
+  padding: 0 clamp(1.5rem, 5vw, 4.6rem);
+}
+
+.series__status,
+.series__error {
+  font-family: var(--font-display);
+  font-size: var(--fs-md);
+  color: var(--color-text-secondary);
+  padding: var(--space-lg) 0;
+}
