@@ -1,5 +1,6 @@
 import { useRef } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import Button from '../Button/Button';
 import styles from './GenrePills.module.css';
 
 /**
@@ -37,18 +38,15 @@ function GenrePills({ genres, activeGenre, onSelect }) {
         {genres.map((genre) => {
           const isSelected = genre.id === activeGenre;
           return (
-            <button
+            <Button
               key={genre.id}
-              type="button"
-              className={[
-                styles['genre-pills__pill'],
-                isSelected ? styles['genre-pills__pill--selected'] : '',
-              ].join(' ')}
+              variant="pill"
+              isSelected={isSelected}
               aria-pressed={isSelected}
               onClick={() => onSelect(genre.id)}
             >
               {genre.label}
-            </button>
+            </Button>
           );
         })}
       </div>
