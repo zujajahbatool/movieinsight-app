@@ -1,0 +1,28 @@
+.continue-watching {
+  margin-top: var(--space-xl);
+  position: relative;
+  padding: 0 clamp(1.5rem, 5vw, 4.6rem);
+}
+
+.continue-watching__status,
+.continue-watching__error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 112px;
+  width: 100%;
+  color: var(--color-text-secondary);
+  font-size: var(--fs-md);
+  font-family: var(--font-display);
+}
+
+@media (min-width: 768px) {
+  .continue-watching__status,
+  .continue-watching__error {
+    height: 216px;
+  }
+}
+
+.continue-watching__error {
+  color: #ff4a4a;
+}
