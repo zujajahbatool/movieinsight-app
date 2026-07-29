@@ -3,6 +3,9 @@ import Navbar from './components/layout/Navbar/Navbar';
 import Hero from './components/home/Hero/Hero';
 import Trends from './components/home/Trends/Trends';
 import Movies from './components/home/Movies/Movies';
+import GoldenGlobeBanner from './components/home/GoldenGlobeBanner/GoldenGlobeBanner';
+import Series from './components/home/Series/Series';
+import Pricing from './components/home/Pricing/Pricing';
 import { useThemeStore } from './store/useThemeStore';
 import './App.css';
 
@@ -21,6 +24,9 @@ function App() {
         <Hero />
         <Trends />
         <Movies />
+        <GoldenGlobeBanner />
+        <Series />
+        <Pricing />
       </main>
     </div>
   );
