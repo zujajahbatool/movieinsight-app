@@ -42,4 +42,7 @@ export const tmdb = {
   tvDetails: (id) => tmdbFetch(`/tv/${id}`),
   discoverByGenre: (genreId, mediaType = 'movie') =>
     tmdbFetch(`/discover/${mediaType}`, { with_genres: genreId }),
+  search: (mediaType, query) => tmdbFetch(`/search/${mediaType}`, { query }),
+  discover: (mediaType, params) => tmdbFetch(`/discover/${mediaType}`, params),
+  personDetails: (id) => tmdbFetch(`/person/${id}`),
 };
