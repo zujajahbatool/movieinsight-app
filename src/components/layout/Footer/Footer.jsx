@@ -58,14 +58,22 @@ const SOCIAL_LINKS = [
   { icon: TelegramIcon, href: '#', name: 'Telegram' },
 ];
 
-function Footer() {
+function Footer({ isKidsPage = false }) {
   return (
     <footer className={styles.footer}>
       {/* Studios grid inside Footer */}
-      <Studios />
+      {!isKidsPage && <Studios />}
 
       {/* Links section */}
       <div className={styles.footer__container}>
+        {isKidsPage && (
+          <div className={styles['footer__kids-see-more-wrap']}>
+            <button type="button" className={styles['footer__kids-see-more']}>
+              See More
+            </button>
+          </div>
+        )}
+
         <div className={styles.footer__links}>
           {FOOTER_LINKS.map((link, idx) => (
             <a key={idx} href={link.href} className={styles.footer__link}>

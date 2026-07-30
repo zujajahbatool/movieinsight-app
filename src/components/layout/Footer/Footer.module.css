@@ -95,3 +95,35 @@
   color: var(--text-secondary);
   font-size: var(--fs-xs);
 }
+
+.footer__kids-see-more-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: var(--space-xl);
+  width: 100%;
+}
+
+.footer__kids-see-more {
+  background: var(--accent-blue);
+  border: none;
+  color: #ffffff;
+  padding: 12px 36px;
+  border-radius: 50px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(34, 142, 229, 0.3);
+}
+
+.footer__kids-see-more:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(34, 142, 229, 0.5);
+  background: #2596f2;
+}
+
+.footer__kids-see-more:active {
+  transform: translateY(0);
+}
+
