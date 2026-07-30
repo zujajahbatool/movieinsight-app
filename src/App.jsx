@@ -10,6 +10,8 @@ import Collections from './components/home/Collections/Collections';
 import ContinueWatching from './components/home/ContinueWatching/ContinueWatching';
 import Characters from './components/home/Characters/Characters';
 import KidsBanner from './components/home/KidsBanner/KidsBanner';
+import FrequentQueries from './components/home/FrequentQueries/FrequentQueries';
+import Footer from './components/layout/Footer/Footer';
 import { useThemeStore } from './store/useThemeStore';
 import './App.css';
 
@@ -35,7 +37,9 @@ function App() {
         <ContinueWatching />
         <Characters />
         <KidsBanner />
+        <FrequentQueries />
       </main>
+      <Footer />
     </div>
   );
 }
