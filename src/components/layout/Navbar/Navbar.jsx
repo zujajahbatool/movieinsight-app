@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { List, X } from 'lucide-react';
 import { useThemeStore } from '../../../store/useThemeStore';
+import { useNavigationStore } from '../../../store/useNavigationStore';
 import logoDark from '../../../assets/logo-dark-theme.png';
 import logoLight from '../../../assets/logo-light-theme.png';
 import searchIconDark from '../../../assets/magnifying-glass-dark-theme.png';
@@ -27,13 +28,20 @@ const NAV_LINKS = [
 
 function Navbar() {
   const { theme, toggleTheme } = useThemeStore();
-  const [activeLabel, setActiveLabel] = useState('Home');
+  const { page, setPage } = useNavigationStore();
+  const [activeLabelState, setActiveLabelState] = useState('Home');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  const activeLabel = page === 'kids' ? '' : activeLabelState;
+
   const handleNavClick = (link) => {
-    setActiveLabel(link.label);
-    document.getElementById(link.target)?.scrollIntoView({ behavior: 'smooth' });
+    setActiveLabelState(link.label);
+    setPage('home');
+    setTimeout(() => {
+      document.getElementById(link.target)?.scrollIntoView({ behavior: 'smooth' });
+    }, 100);
   };
+
 
   const logoSrc = theme === 'dark' ? logoDark : logoLight;
   const searchSrc = theme === 'dark' ? searchIconDark : searchIconLight;
@@ -60,7 +68,13 @@ function Navbar() {
         </div>
 
         {/* Logo (left on desktop, right on mobile) */}
-        <img className={styles['navbar__logo']} src={logoSrc} alt="Omni logo" />
+        <img
+          className={styles['navbar__logo']}
+          src={logoSrc}
+          alt="Omni logo"
+          onClick={() => setPage('home')}
+          style={{ cursor: 'pointer' }}
+        />
 
         {/* Navigation Links (center on desktop, hidden on mobile) */}
         <nav className={styles['navbar__links']} aria-label="Primary">
