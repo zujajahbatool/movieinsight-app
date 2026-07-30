@@ -29,6 +29,7 @@ function Trends() {
               title={item.title || item.name}
               posterUrl={getPosterUrl(item.poster_path)}
               rating={item.vote_average}
+              genreIds={item.genre_ids}
               isAdded={watchlist.includes(item.id)}
               onAddToggle={() => toggleMovie(item.id)}
             />
