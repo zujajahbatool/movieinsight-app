@@ -72,6 +72,7 @@ function MovieCard({
   progress,
   isAdded = false,
   onAddToggle,
+  variant,
 }) {
   const maskId = useId().replace(/:/g, '');
   const [isMobile, setIsMobile] = useState(false);
@@ -82,6 +83,8 @@ function MovieCard({
     window.addEventListener('resize', check);
     return () => window.removeEventListener('resize', check);
   }, []);
+
+  const isSimple = variant === 'simple';
 
   const cardW = isMobile ? 112 : 208;
   const cardH = isMobile ? 160 : 296;
@@ -118,45 +121,53 @@ function MovieCard({
   return (
     <div className={styles['movie-card']}>
       {/* SVG ClipPath Mask Definition */}
-      <svg width="0" height="0" style={{ position: 'absolute', width: 0, height: 0 }}>
-        <defs>
-          <clipPath id={maskId} clipPathUnits="userSpaceOnUse">
-            {/* 1. THE ISLAND */}
-            <path d={`
-              M ${outerR},0 
-              H ${btnS - btnR} 
-              A ${btnR} ${btnR} 0 0 1 ${btnS} ${btnR} 
-              V ${btnS - btnR} 
-              A ${btnR} ${btnR} 0 0 1 ${btnS - btnR} ${btnS} 
-              H ${btnR} 
-              A ${btnR} ${btnR} 0 0 1 0 ${btnS - btnR} 
-              V ${outerR} 
-              A ${outerR} ${outerR} 0 0 1 ${outerR} 0 
-              Z
-            `} />
-            {/* 2. MAIN POSTER BODY */}
-            <path d={`
-              M ${cutout + innerR}, 0 
-              H ${cardW - outerR} 
-              A ${outerR} ${outerR} 0 0 1 ${cardW} ${outerR} 
-              V ${cardH - outerR} 
-              A ${outerR} ${outerR} 0 0 1 ${cardW - outerR} ${cardH} 
-              H ${outerR} 
-              A ${outerR} ${outerR} 0 0 1 0 ${cardH - outerR} 
-              V ${cutout + innerR} 
-              A ${innerR} ${innerR} 0 0 1 ${innerR} ${cutout} 
-              H ${cutout - innerR} 
-              A ${innerR} ${innerR} 0 0 0 ${cutout} ${cutout - innerR} 
-              V ${innerR} 
-              A ${innerR} ${innerR} 0 0 1 ${cutout + innerR} 0 
-              Z
-            `} />
-          </clipPath>
-        </defs>
-      </svg>
+      {!isSimple && (
+        <svg width="0" height="0" style={{ position: 'absolute', width: 0, height: 0 }}>
+          <defs>
+            <clipPath id={maskId} clipPathUnits="userSpaceOnUse">
+              {/* 1. THE ISLAND */}
+              <path d={`
+                M ${outerR},0 
+                H ${btnS - btnR} 
+                A ${btnR} ${btnR} 0 0 1 ${btnS} ${btnR} 
+                V ${btnS - btnR} 
+                A ${btnR} ${btnR} 0 0 1 ${btnS - btnR} ${btnS} 
+                H ${btnR} 
+                A ${btnR} ${btnR} 0 0 1 0 ${btnS - btnR} 
+                V ${outerR} 
+                A ${outerR} ${outerR} 0 0 1 ${outerR} 0 
+                Z
+              `} />
+              {/* 2. MAIN POSTER BODY */}
+              <path d={`
+                M ${cutout + innerR}, 0 
+                H ${cardW - outerR} 
+                A ${outerR} ${outerR} 0 0 1 ${cardW} ${outerR} 
+                V ${cardH - outerR} 
+                A ${outerR} ${outerR} 0 0 1 ${cardW - outerR} ${cardH} 
+                H ${outerR} 
+                A ${outerR} ${outerR} 0 0 1 0 ${cardH - outerR} 
+                V ${cutout + innerR} 
+                A ${innerR} ${innerR} 0 0 1 ${innerR} ${cutout} 
+                H ${cutout - innerR} 
+                A ${innerR} ${innerR} 0 0 0 ${cutout} ${cutout - innerR} 
+                V ${innerR} 
+                A ${innerR} ${innerR} 0 0 1 ${cutout + innerR} 0 
+                Z
+              `} />
+            </clipPath>
+          </defs>
+        </svg>
+      )}
 
       {/* Main Masked Container */}
-      <div className={styles['movie-card__poster-wrap']} style={{ clipPath: `url(#${maskId})` }}>
+      <div
+        className={[
+          styles['movie-card__poster-wrap'],
+          isSimple ? styles['movie-card__poster-wrap--simple'] : '',
+        ].join(' ')}
+        style={isSimple ? {} : { clipPath: `url(#${maskId})` }}
+      >
         {posterUrl ? (
           <img
             className={styles['movie-card__poster']}
@@ -189,25 +200,27 @@ function MovieCard({
       </div>
 
       {/* Glassmorphic Add Button */}
-      <button
-        type="button"
-        className={[
-          styles['movie-card__add-btn'],
-          isAdded ? styles['movie-card__add-btn--active'] : '',
-        ].join(' ')}
-        onClick={(e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          onAddToggle?.();
-        }}
-        aria-label={isAdded ? `Remove ${title} from list` : `Add ${title} to list`}
-      >
-        {isAdded ? (
-          <Check size={isMobile ? 12 : 28} strokeWidth={3} />
-        ) : (
-          <Plus size={isMobile ? 12 : 28} strokeWidth={3} />
-        )}
-      </button>
+      {!isSimple && (
+        <button
+          type="button"
+          className={[
+            styles['movie-card__add-btn'],
+            isAdded ? styles['movie-card__add-btn--active'] : '',
+          ].join(' ')}
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            onAddToggle?.();
+          }}
+          aria-label={isAdded ? `Remove ${title} from list` : `Add ${title} to list`}
+        >
+          {isAdded ? (
+            <Check size={isMobile ? 12 : 28} strokeWidth={3} />
+          ) : (
+            <Plus size={isMobile ? 12 : 28} strokeWidth={3} />
+          )}
+        </button>
+      )}
 
       {/* Progress bar overlay (e.g. for Continue Watching) */}
       {typeof progress === 'number' && (
