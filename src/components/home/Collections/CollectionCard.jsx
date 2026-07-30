@@ -7,10 +7,7 @@ function CollectionCard({ title, items }) {
   const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
-    if (!isHovered) {
-      setActiveIndex(0);
-      return;
-    }
+    if (!isHovered) return;
 
     const interval = setInterval(() => {
       setActiveIndex((prev) => (prev + 1) % 3);
@@ -23,7 +20,10 @@ function CollectionCard({ title, items }) {
     <div
       className={styles['collection-card']}
       onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      onMouseLeave={() => {
+        setIsHovered(false);
+        setActiveIndex(0);
+      }}
     >
       <div className={styles['collection-card__stack']}>
         {items.map((item, i) => {
@@ -31,16 +31,19 @@ function CollectionCard({ title, items }) {
           // diff: 0 = top, 1 = middle, 2 = back
           const diff = (i - activeIndex + 3) % 3;
 
-          let cardStyleClass = '';
-          if (diff === 0) cardStyleClass = styles['collection-card__item--top'];
-          else if (diff === 1) cardStyleClass = styles['collection-card__item--middle'];
-          else cardStyleClass = styles['collection-card__item--back'];
+          const cardStyleClass =
+            diff === 0
+              ? styles['collection-card__item--top']
+              : diff === 1
+              ? styles['collection-card__item--middle']
+              : styles['collection-card__item--back'];
 
           return (
             <div
               key={item.id}
               className={`${styles['collection-card__item']} ${cardStyleClass}`}
             >
+
               {item.poster_path ? (
                 <img
                   className={styles['collection-card__poster']}
