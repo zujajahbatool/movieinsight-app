@@ -1,13 +1,15 @@
 import { useContinueWatching } from '../../../hooks/useContinueWatching';
 import ScrollRow from '../../common/ScrollRow/ScrollRow';
 import ContinueWatchingCard from './ContinueWatchingCard';
+import { useNavigationStore } from '../../../store/useNavigationStore';
 import styles from './ContinueWatching.module.css';
 
 function ContinueWatching() {
   const { data: items, loading, error } = useContinueWatching();
+  const setPage = useNavigationStore((state) => state.setPage);
 
   const handleSeeMore = () => {
-    console.log('Navigate to Continue Watching See More');
+    setPage('advance-search');
   };
 
   return (

@@ -3,16 +3,17 @@ import ScrollRow from '../../common/ScrollRow/ScrollRow';
 import MovieCard from '../../common/MovieCard/MovieCard';
 import { getPosterUrl } from '../../../api/tmdbClient';
 import { useWatchlistStore } from '../../../store/useWatchlistStore';
+import { useNavigationStore } from '../../../store/useNavigationStore';
 import styles from './Trends.module.css';
 
 function Trends() {
   const { data: items, loading, error } = useTrending(12);
   const watchlist = useWatchlistStore((state) => state.watchlist);
   const toggleMovie = useWatchlistStore((state) => state.toggleMovie);
+  const setPage = useNavigationStore((state) => state.setPage);
 
   const handleSeeMore = () => {
-    // Will be wired up to react-router-dom later
-    console.log('Navigate to Trends See More');
+    setPage('advance-search');
   };
 
   return (

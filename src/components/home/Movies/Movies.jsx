@@ -5,6 +5,7 @@ import MovieCard from '../../common/MovieCard/MovieCard';
 import GenrePills from '../../common/GenrePills/GenrePills';
 import { getPosterUrl } from '../../../api/tmdbClient';
 import { useWatchlistStore } from '../../../store/useWatchlistStore';
+import { useNavigationStore } from '../../../store/useNavigationStore';
 import styles from './Movies.module.css';
 
 const GENRES = [
@@ -26,10 +27,10 @@ function Movies() {
   const { data: items, loading, error } = useDiscoverByGenre(activeGenre, 'movie', 12);
   const watchlist = useWatchlistStore((state) => state.watchlist);
   const toggleMovie = useWatchlistStore((state) => state.toggleMovie);
+  const setPage = useNavigationStore((state) => state.setPage);
 
   const handleSeeMore = () => {
-    // Will be wired up to react-router-dom later
-    console.log('Navigate to Movies See More for genre:', activeGenre);
+    setPage('movies');
   };
 
   return (
