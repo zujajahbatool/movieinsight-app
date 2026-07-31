@@ -327,6 +327,7 @@
   font-family: var(--font-display);
   font-size: 14px;
   cursor: pointer;
+  flex-wrap: nowrap;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -346,7 +347,7 @@
   background: var(--accent-blue);
   color: #ebfaff;
   font-weight: 700;
-  width: 128px;
+  width: auto;
   height: 32px;
 }
 
