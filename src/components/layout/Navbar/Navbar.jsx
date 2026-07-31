@@ -32,14 +32,29 @@ function Navbar() {
   const [activeLabelState, setActiveLabelState] = useState('Home');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const activeLabel = page === 'kids' ? '' : activeLabelState;
+  let activeLabel = '';
+  if (page === 'kids' || page === 'advance-search') {
+    activeLabel = '';
+  } else if (page === 'movies') {
+    activeLabel = 'Movies';
+  } else if (page === 'series') {
+    activeLabel = 'Series';
+  } else if (page === 'home') {
+    activeLabel = activeLabelState;
+  }
 
   const handleNavClick = (link) => {
     setActiveLabelState(link.label);
-    setPage('home');
-    setTimeout(() => {
-      document.getElementById(link.target)?.scrollIntoView({ behavior: 'smooth' });
-    }, 100);
+    if (link.label === 'Movies') {
+      setPage('movies');
+    } else if (link.label === 'Series') {
+      setPage('series');
+    } else {
+      setPage('home');
+      setTimeout(() => {
+        document.getElementById(link.target)?.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    }
   };
 
 
@@ -62,7 +77,12 @@ function Navbar() {
           >
             {isMenuOpen ? <X className={styles['navbar__hamburger-icon']} /> : <List className={styles['navbar__hamburger-icon']} />}
           </button>
-          <button type="button" className={styles['navbar__icon-btn']} aria-label="Search">
+          <button
+            type="button"
+            className={styles['navbar__icon-btn']}
+            aria-label="Search"
+            onClick={() => setPage('advance-search')}
+          >
             <img className={styles['navbar__icon']} src={searchSrc} alt="Search" />
           </button>
         </div>
@@ -96,7 +116,12 @@ function Navbar() {
 
         {/* Action icons (right on desktop, hidden on mobile) */}
         <div className={styles['navbar__actions']}>
-          <button type="button" className={styles['navbar__icon-btn']} aria-label="Search">
+          <button
+            type="button"
+            className={styles['navbar__icon-btn']}
+            aria-label="Search"
+            onClick={() => setPage('advance-search')}
+          >
             <img className={styles['navbar__icon']} src={searchSrc} alt="Search" />
           </button>
           <button type="button" className={styles['navbar__icon-btn']} aria-label="Notifications">
