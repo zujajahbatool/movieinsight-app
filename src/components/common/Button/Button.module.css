@@ -104,8 +104,8 @@
 
 /* Pill Variant (Genre Pill style) */
 .button--pill {
-  padding: 12px 28px;
-  border-radius: 25px;
+  padding: 10px 24px;
+  border-radius: 20px;
   border: 1px solid var(--color-pill-border);
   background: var(--color-pill-unselected-bg);
   color: var(--color-text-primary);
@@ -130,6 +130,14 @@
 .button--selected:hover:not(:disabled) {
   background: var(--color-pill-selected) !important;
   transform: none;
+}
+
+@media (max-width: 768px) {
+  .button--pill {
+    padding: 6px 14px;
+    font-size: var(--fs-xs);
+    border-radius: 14px;
+  }
 }
 
 /* Gradient Variant (Pricing Continue button) */
