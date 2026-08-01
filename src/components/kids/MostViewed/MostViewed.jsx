@@ -2,10 +2,12 @@ import { useKidsContent } from '../../../hooks/useKidsContent';
 import SectionHeader from '../../common/SectionHeader/SectionHeader';
 import MovieCard from '../../common/MovieCard/MovieCard';
 import { getPosterUrl } from '../../../api/tmdbClient';
+import { useNavigationStore } from '../../../store/useNavigationStore';
 import styles from './MostViewed.module.css';
 
 function MostViewed() {
   const { data: items, loading, error } = useKidsContent('mostviewed', 20);
+  const setWatchNow = useNavigationStore((state) => state.setWatchNow);
 
   return (
     <section className={styles.mostviewed} id="most-viewed">
@@ -27,6 +29,7 @@ function MostViewed() {
               rating={item.vote_average}
               genreIds={item.genre_ids}
               variant="simple"
+              onClick={() => setWatchNow(item.id, 'movie', true)}
             />
           ))}
         </div>
