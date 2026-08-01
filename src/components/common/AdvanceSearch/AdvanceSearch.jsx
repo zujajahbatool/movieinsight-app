@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import { ChevronDown, Search } from 'lucide-react';
+import { Search } from 'lucide-react';
 import GenrePills from '../GenrePills/GenrePills';
+import CustomSelect from '../CustomSelect/CustomSelect';
 import searchLogo from '../../../assets/search-logo.png';
 import styles from './AdvanceSearch.module.css';
 
@@ -101,6 +102,7 @@ function AdvanceSearch({ mediaType = 'movie', onSearch }) {
 
   // Reset genre filter if media type changes
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setActiveGenre('all');
   }, [mediaType]);
 
@@ -124,58 +126,22 @@ function AdvanceSearch({ mediaType = 'movie', onSearch }) {
           <div className={styles.dropdownsGrid}>
             <div className={styles.selectGroup}>
               <span className={styles.label}>Year</span>
-              <div className={styles.selectWrapper}>
-                <select value={year} onChange={(e) => setYear(e.target.value)} className={styles.select}>
-                  {YEARS.map((y) => (
-                    <option key={y.value} value={y.value}>
-                      {y.label}
-                    </option>
-                  ))}
-                </select>
-                <ChevronDown className={styles.selectChevron} size={16} />
-              </div>
+              <CustomSelect value={year} options={YEARS} onChange={setYear} />
             </div>
 
             <div className={styles.selectGroup}>
               <span className={styles.label}>Country</span>
-              <div className={styles.selectWrapper}>
-                <select value={country} onChange={(e) => setCountry(e.target.value)} className={styles.select}>
-                  {COUNTRIES.map((c) => (
-                    <option key={c.value} value={c.value}>
-                      {c.label}
-                    </option>
-                  ))}
-                </select>
-                <ChevronDown className={styles.selectChevron} size={16} />
-              </div>
+              <CustomSelect value={country} options={COUNTRIES} onChange={setCountry} />
             </div>
 
             <div className={styles.selectGroup}>
               <span className={styles.label}>Actor</span>
-              <div className={styles.selectWrapper}>
-                <select value={actor} onChange={(e) => setActor(e.target.value)} className={styles.select}>
-                  {ACTORS.map((a) => (
-                    <option key={a.value} value={a.value}>
-                      {a.label}
-                    </option>
-                  ))}
-                </select>
-                <ChevronDown className={styles.selectChevron} size={16} />
-              </div>
+              <CustomSelect value={actor} options={ACTORS} onChange={setActor} />
             </div>
 
             <div className={styles.selectGroup}>
               <span className={styles.label}>Director</span>
-              <div className={styles.selectWrapper}>
-                <select value={director} onChange={(e) => setDirector(e.target.value)} className={styles.select}>
-                  {DIRECTORS.map((d) => (
-                    <option key={d.value} value={d.value}>
-                      {d.label}
-                    </option>
-                  ))}
-                </select>
-                <ChevronDown className={styles.selectChevron} size={16} />
-              </div>
+              <CustomSelect value={director} options={DIRECTORS} onChange={setDirector} />
             </div>
           </div>
 

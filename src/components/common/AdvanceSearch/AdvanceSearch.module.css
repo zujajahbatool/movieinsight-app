@@ -3,12 +3,13 @@
   width: 100%;
   margin-top: 2rem;
   margin-bottom: 2.5rem;
+  z-index: 50;
 }
 
 /* Badge Tab style */
 .badge {
   position: absolute;
-  top: -16px;
+  top: -30px;
   left: 24px;
   background: var(--accent-blue);
   color: #ffffff;
@@ -24,6 +25,7 @@
 /* Main card wrapper */
 .card {
   position: relative;
+  z-index: 10;
   background: var(--surface-glass);
   border: 1px solid rgba(34, 142, 229, 0.4);
   border-radius: var(--radius-lg);
@@ -244,4 +246,20 @@
     margin-top: 1.25rem;
     padding: 0;
   }
+}
+
+/* Light theme overrides */
+[data-theme='light'] .searchInput {
+  background: rgba(255, 255, 255, 0.85);
+  border-color: rgba(34, 142, 229, 0.35);
+  color: var(--text-primary);
+}
+
+[data-theme='light'] .searchInput::placeholder {
+  color: var(--text-secondary);
+  opacity: 0.7;
+}
+
+[data-theme='light'] .label {
+  color: var(--text-primary);
 }
