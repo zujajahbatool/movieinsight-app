@@ -1,0 +1,149 @@
+.container {
+  position: relative;
+  flex-grow: 1;
+  display: flex;
+}
+
+.trigger {
+  width: 100%;
+  background: rgba(3, 10, 27, 0.6);
+  border: 1px solid rgba(34, 142, 229, 0.35);
+  border-radius: var(--radius-pill);
+  padding: 0.6rem 1.25rem;
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: var(--fs-sm);
+  cursor: pointer;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: left;
+  transition: all 0.3s ease;
+}
+
+.trigger:hover {
+  border-color: rgba(34, 142, 229, 0.6);
+}
+
+.triggerActive,
+.trigger:focus {
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 8px rgba(34, 142, 229, 0.4);
+}
+
+.valueText {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 1rem;
+}
+
+.chevron {
+  color: var(--accent-blue);
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+}
+
+.chevronOpen {
+  transform: rotate(180deg);
+}
+
+/* Options List Container extending downward */
+.optionsList {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  max-height: 220px;
+  overflow-y: auto;
+  background: #0d1527; /* Dark matching scheme */
+  border: 1px solid rgba(34, 142, 229, 0.45);
+  border-radius: var(--radius-md);
+  margin: 0.5rem 0 0 0;
+  padding: 0.5rem 0;
+  list-style: none;
+  z-index: 1000;
+  box-shadow: 0 8px 32px 0 rgba(3, 10, 27, 0.65);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  /* Standard Scrollbar styling */
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent-blue) rgba(3, 10, 27, 0.6);
+}
+
+/* Webkit Scrollbar styling (Chrome, Safari, Edge) */
+.optionsList::-webkit-scrollbar {
+  width: 6px;
+}
+
+.optionsList::-webkit-scrollbar-track {
+  background: rgba(3, 10, 27, 0.6);
+  border-radius: var(--radius-pill);
+}
+
+.optionsList::-webkit-scrollbar-thumb {
+  background: var(--accent-blue);
+  border-radius: var(--radius-pill);
+}
+
+.optionsList::-webkit-scrollbar-thumb:hover {
+  background: var(--color-accent-hover, #4aa3ec);
+}
+
+/* Individual Option Item */
+.optionItem {
+  padding: 0.6rem 1.25rem;
+  font-family: var(--font-display);
+  font-size: var(--fs-sm);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.optionItem:hover {
+  background: var(--accent-blue-soft, rgba(34, 142, 229, 0.18));
+  color: #ffffff;
+}
+
+.optionSelected {
+  background: var(--accent-blue);
+  color: #ffffff;
+}
+
+/* Light theme overrides */
+[data-theme='light'] .trigger {
+  background: rgba(255, 255, 255, 0.85);
+  border-color: rgba(34, 142, 229, 0.35);
+  color: var(--text-primary);
+}
+
+[data-theme='light'] .trigger:hover {
+  border-color: rgba(34, 142, 229, 0.65);
+}
+
+[data-theme='light'] .optionsList {
+  background: #ffffff;
+  border-color: rgba(34, 142, 229, 0.4);
+  box-shadow: 0 8px 32px 0 rgba(10, 26, 43, 0.15);
+  scrollbar-color: var(--accent-blue) rgba(10, 26, 43, 0.05);
+}
+
+[data-theme='light'] .optionsList::-webkit-scrollbar-track {
+  background: rgba(10, 26, 43, 0.05);
+}
+
+[data-theme='light'] .optionItem {
+  color: var(--text-primary);
+}
+
+[data-theme='light'] .optionItem:hover {
+  background: rgba(34, 142, 229, 0.1);
+  color: var(--accent-blue);
+}
+
+[data-theme='light'] .optionSelected {
+  background: var(--accent-blue);
+  color: #ffffff;
+}
