@@ -4,6 +4,7 @@ import MovieCard from '../components/common/MovieCard/MovieCard';
 import Button from '../components/common/Button/Button';
 import { tmdb, getPosterUrl } from '../api/tmdbClient';
 import { useWatchlistStore } from '../store/useWatchlistStore';
+import { useNavigationStore } from '../store/useNavigationStore';
 import styles from './AdvanceSearchPage.module.css';
 
 function AdvanceSearchPage() {
@@ -23,6 +24,7 @@ function AdvanceSearchPage() {
 
   const watchlist = useWatchlistStore((state) => state.watchlist);
   const toggleMovie = useWatchlistStore((state) => state.toggleMovie);
+  const setWatchNow = useNavigationStore((state) => state.setWatchNow);
 
   const mediaType = isMoviesActive ? 'movie' : 'tv';
 
@@ -33,13 +35,21 @@ function AdvanceSearchPage() {
       setLoading(true);
       setError(null);
       try {
-        let results = [];
-        const hasSearchQuery = !!filters.query;
+        const response = await (filters.query
+          ? tmdb.search(mediaType, filters.query)
+          : tmdb.discover(mediaType, {
+              ...(filters.year && {
+                [mediaType === 'movie' ? 'primary_release_year' : 'first_air_date_year']: filters.year,
+              }),
+              ...(filters.country && { with_origin_country: filters.country }),
+              ...(filters.actor && { with_cast: filters.actor }),
+              ...(filters.director && { with_crew: filters.director }),
+              ...(filters.genre && { with_genres: filters.genre }),
+            }));
 
-        if (hasSearchQuery) {
-          const response = await tmdb.search(mediaType, filters.query);
-          results = response.results || [];
+        let results = response.results || [];
 
+        if (filters.query) {
           if (filters.genre) {
             results = results.filter((item) =>
               item.genre_ids?.includes(Number(filters.genre))
@@ -56,30 +66,6 @@ function AdvanceSearchPage() {
               item.origin_country?.includes(filters.country)
             );
           }
-        } else {
-          const params = {};
-          if (filters.year) {
-            if (mediaType === 'movie') {
-              params.primary_release_year = filters.year;
-            } else {
-              params.first_air_date_year = filters.year;
-            }
-          }
-          if (filters.country) {
-            params.with_origin_country = filters.country;
-          }
-          if (filters.actor) {
-            params.with_cast = filters.actor;
-          }
-          if (filters.director) {
-            params.with_crew = filters.director;
-          }
-          if (filters.genre) {
-            params.with_genres = filters.genre;
-          }
-
-          const response = await tmdb.discover(mediaType, params);
-          results = response.results || [];
         }
 
         if (active) {
@@ -137,6 +123,7 @@ function AdvanceSearchPage() {
                 genreIds={item.genre_ids}
                 isAdded={watchlist.includes(item.id)}
                 onAddToggle={() => toggleMovie(item.id)}
+                onClick={() => setWatchNow(item.id, mediaType, false)}
               />
             ))}
           </div>
