@@ -27,6 +27,7 @@ function Series() {
   const watchlist = useWatchlistStore((state) => state.watchlist);
   const toggleMovie = useWatchlistStore((state) => state.toggleMovie);
   const setPage = useNavigationStore((state) => state.setPage);
+  const setWatchNow = useNavigationStore((state) => state.setWatchNow);
 
   const handleSeeMore = () => {
     setPage('series');
@@ -59,6 +60,7 @@ function Series() {
               genreIds={item.genre_ids}
               isAdded={watchlist.includes(item.id)}
               onAddToggle={() => toggleMovie(item.id)}
+              onClick={() => setWatchNow(item.id, 'tv', false)}
             />
           ))
         )}
