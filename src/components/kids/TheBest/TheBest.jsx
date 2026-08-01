@@ -2,10 +2,12 @@ import { useKidsContent } from '../../../hooks/useKidsContent';
 import ScrollRow from '../../common/ScrollRow/ScrollRow';
 import MovieCard from '../../common/MovieCard/MovieCard';
 import { getPosterUrl } from '../../../api/tmdbClient';
+import { useNavigationStore } from '../../../store/useNavigationStore';
 import styles from './TheBest.module.css';
 
 function TheBest() {
   const { data: items, loading, error } = useKidsContent('thebest', 12);
+  const setWatchNow = useNavigationStore((state) => state.setWatchNow);
 
   const handleSeeMore = () => {
     console.log('Navigate to The Best See More');
@@ -27,6 +29,7 @@ function TheBest() {
               rating={item.vote_average}
               genreIds={item.genre_ids}
               variant="simple"
+              onClick={() => setWatchNow(item.id, 'movie', true)}
             />
           ))}
         </ScrollRow>
