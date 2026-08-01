@@ -269,10 +269,16 @@
   max-width: 1232px;
   margin: 0 auto;
   padding: 0 clamp(1rem, 2vw, 1.75rem);
-  margin-top: -6rem; /* pull up into hero banner bottom */
+  margin-top: -2.5rem; /* pull up slightly on mobile to avoid colliding with hero buttons */
   position: relative;
   z-index: 4;
   margin-bottom: var(--space-lg);
+}
+
+@media (min-width: 768px) {
+  .screenshotsSection {
+    margin-top: -6rem; /* pull up fully on desktop */
+  }
 }
 
 .screenshotsRow {
