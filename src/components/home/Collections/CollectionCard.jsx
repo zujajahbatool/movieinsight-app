@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { getPosterUrl } from '../../../api/tmdbClient';
 import styles from './CollectionCard.module.css';
 
-function CollectionCard({ title, items }) {
+function CollectionCard({ title, items, onClick }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -19,12 +19,14 @@ function CollectionCard({ title, items }) {
   return (
     <div
       className={styles['collection-card']}
+      onClick={onClick}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => {
         setIsHovered(false);
         setActiveIndex(0);
       }}
     >
+
       <div className={styles['collection-card__stack']}>
         {items.map((item, i) => {
           // Calculate stack position relative to active index
