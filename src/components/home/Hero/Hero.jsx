@@ -6,6 +6,7 @@ import netflixIcon from '../../../assets/netflix-icon.png';
 import playIcon from '../../../assets/play-icon.png';
 import styles from './Hero.module.css';
 import Button from '../../common/Button/Button';
+import { useNavigationStore } from '../../../store/useNavigationStore';
 
 const FALLBACK = {
   id: null,
@@ -83,6 +84,8 @@ function Hero() {
   const active = hasData ? features[current] : FALLBACK;
   const order = hasData ? features : FALLBACK_THUMBS;
 
+  const playVideo = useNavigationStore((state) => state.playVideo);
+
   const goTo = (idx) => {
     if (!hasData) return;
     setCurrent(idx);
@@ -90,7 +93,7 @@ function Hero() {
 
   const handleWatchNow = () => {
     if (!active?.id) return;
-    console.log('Watch now:', active.id);
+    playVideo(active.id, 'movie', false);
   };
 
   return (
