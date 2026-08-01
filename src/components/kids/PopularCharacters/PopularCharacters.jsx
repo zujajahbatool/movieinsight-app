@@ -49,7 +49,20 @@ const POPULAR_CHARACTERS = [
   },
 ];
 
+import { useNavigationStore } from '../../../store/useNavigationStore';
+
+const CHARACTER_MOVIE_MAP = {
+  'char-tomjerry': 587807, // Tom & Jerry (2021)
+  'char-anger': 150540,    // Inside Out
+  'char-elsa': 490132,     // Frozen II
+  'char-moana': 277834,    // Moana
+  'char-vanellope': 82690, // Wreck-It Ralph
+  'char-boss-baby': 295693, // The Boss Baby
+};
+
 function PopularCharacters() {
+  const setWatchNow = useNavigationStore((state) => state.setWatchNow);
+
   const handleSeeMore = () => {
     console.log('Navigate to Popular Characters See More');
   };
@@ -65,6 +78,12 @@ function PopularCharacters() {
             rating={char.rating}
             genre={char.genre}
             variant="simple"
+            onClick={() => {
+              const movieId = CHARACTER_MOVIE_MAP[char.id];
+              if (movieId) {
+                setWatchNow(movieId, 'movie', true);
+              }
+            }}
           />
         ))}
       </ScrollRow>
