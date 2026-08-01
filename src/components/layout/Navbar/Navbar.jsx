@@ -39,6 +39,8 @@ function Navbar() {
     activeLabel = 'Movies';
   } else if (page === 'series') {
     activeLabel = 'Series';
+  } else if (page === 'collection-list' || page === 'single-collection') {
+    activeLabel = 'Collection';
   } else if (page === 'home') {
     activeLabel = activeLabelState;
   }
@@ -49,6 +51,8 @@ function Navbar() {
       setPage('movies');
     } else if (link.label === 'Series') {
       setPage('series');
+    } else if (link.label === 'Collection') {
+      setPage('collection-list');
     } else {
       setPage('home');
       setTimeout(() => {
@@ -56,6 +60,7 @@ function Navbar() {
       }, 100);
     }
   };
+
 
 
   const logoSrc = theme === 'dark' ? logoDark : logoLight;
@@ -127,7 +132,12 @@ function Navbar() {
           <button type="button" className={styles['navbar__icon-btn']} aria-label="Notifications">
             <img className={styles['navbar__icon']} src={bellSrc} alt="Notifications" />
           </button>
-          <button type="button" className={styles['navbar__icon-btn']} aria-label="Account">
+          <button
+            type="button"
+            className={styles['navbar__icon-btn']}
+            aria-label="Account"
+            onClick={() => setPage('login')}
+          >
             <img className={styles['navbar__icon']} src={userSrc} alt="Account" />
           </button>
           <button
@@ -166,7 +176,15 @@ function Navbar() {
               <button type="button" className={styles['navbar__icon-btn']} aria-label="Notifications">
                 <img className={styles['navbar__icon']} src={bellSrc} alt="Notifications" />
               </button>
-              <button type="button" className={styles['navbar__icon-btn']} aria-label="Account">
+              <button
+                type="button"
+                className={styles['navbar__icon-btn']}
+                aria-label="Account"
+                onClick={() => {
+                  setPage('login');
+                  setIsMenuOpen(false);
+                }}
+              >
                 <img className={styles['navbar__icon']} src={userSrc} alt="Account" />
               </button>
               <button
