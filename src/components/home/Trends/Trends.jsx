@@ -11,6 +11,7 @@ function Trends() {
   const watchlist = useWatchlistStore((state) => state.watchlist);
   const toggleMovie = useWatchlistStore((state) => state.toggleMovie);
   const setPage = useNavigationStore((state) => state.setPage);
+  const setWatchNow = useNavigationStore((state) => state.setWatchNow);
 
   const handleSeeMore = () => {
     setPage('advance-search');
@@ -33,6 +34,7 @@ function Trends() {
               genreIds={item.genre_ids}
               isAdded={watchlist.includes(item.id)}
               onAddToggle={() => toggleMovie(item.id)}
+              onClick={() => setWatchNow(item.id, item.media_type || 'movie', false)}
             />
           ))}
         </ScrollRow>
