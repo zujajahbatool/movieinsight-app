@@ -2,12 +2,12 @@ import { Play } from 'lucide-react';
 import { getBackdropUrl } from '../../../api/tmdbClient';
 import styles from './ContinueWatchingCard.module.css';
 
-function ContinueWatchingCard({ title, backdropPath, progress }) {
+function ContinueWatchingCard({ title, backdropPath, progress, onClick }) {
   // Use w780 size for backdrops on cards
   const backdropUrl = getBackdropUrl(backdropPath, 'w780');
 
   return (
-    <div className={styles['cw-card']}>
+    <div className={styles['cw-card']} onClick={onClick}>
       {backdropUrl ? (
         <img
           className={styles['cw-card__backdrop']}

@@ -7,6 +7,7 @@ import styles from './ContinueWatching.module.css';
 function ContinueWatching() {
   const { data: items, loading, error } = useContinueWatching();
   const setPage = useNavigationStore((state) => state.setPage);
+  const setWatchNow = useNavigationStore((state) => state.setWatchNow);
 
   const handleSeeMore = () => {
     setPage('advance-search');
@@ -30,6 +31,7 @@ function ContinueWatching() {
               title={item.title}
               backdropPath={item.backdrop_path}
               progress={item.progress}
+              onClick={() => setWatchNow(item.id, 'movie', false)}
             />
           ))}
         </ScrollRow>
