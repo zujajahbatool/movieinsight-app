@@ -16,6 +16,11 @@ import KidsPage from './pages/KidsPage';
 import MoviesPage from './pages/MoviesPage';
 import SeriesPage from './pages/SeriesPage';
 import AdvanceSearchPage from './pages/AdvanceSearchPage';
+import CollectionListPage from './pages/CollectionListPage';
+import SingleCollectionPage from './pages/SingleCollectionPage';
+import WatchNowPage from './pages/WatchNowPage';
+import LoginPage from './pages/LoginPage';
+import VideoPlayerPage from './pages/VideoPlayerPage';
 import { useThemeStore } from './store/useThemeStore';
 import { useNavigationStore } from './store/useNavigationStore';
 import './App.css';
@@ -23,6 +28,7 @@ import './App.css';
 function App() {
   const theme = useThemeStore((state) => state.theme);
   const page = useNavigationStore((state) => state.page);
+  const isKidsWatch = useNavigationStore((state) => state.isKidsWatch);
 
   // data-theme drives every [data-theme='light'] override in tokens.css
   useEffect(() => {
@@ -36,7 +42,7 @@ function App() {
 
   return (
     <div className="app">
-      <Navbar />
+      {page !== 'login' && page !== 'video-player' && <Navbar />}
       <main>
         {page === 'home' && (
           <>
@@ -57,11 +63,17 @@ function App() {
         {page === 'movies' && <MoviesPage />}
         {page === 'series' && <SeriesPage />}
         {page === 'advance-search' && <AdvanceSearchPage />}
+        {page === 'collection-list' && <CollectionListPage />}
+        {page === 'single-collection' && <SingleCollectionPage />}
+        {page === 'watch-now' && <WatchNowPage />}
+        {page === 'login' && <LoginPage />}
+        {page === 'video-player' && <VideoPlayerPage />}
       </main>
-      <Footer isKidsPage={page === 'kids'} />
+      {page !== 'login' && page !== 'video-player' && <Footer isKidsPage={page === 'kids' || (page === 'watch-now' && isKidsWatch)} />}
     </div>
   );
 }
+
 
 export default App;
 
