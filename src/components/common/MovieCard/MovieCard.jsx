@@ -73,6 +73,7 @@ function MovieCard({
   isAdded = false,
   onAddToggle,
   variant,
+  onClick,
 }) {
   const maskId = useId().replace(/:/g, '');
   const [isMobile, setIsMobile] = useState(false);
@@ -119,7 +120,7 @@ function MovieCard({
   };
 
   return (
-    <div className={styles['movie-card']}>
+    <div className={styles['movie-card']} onClick={onClick}>
       {/* SVG ClipPath Mask Definition */}
       {!isSimple && (
         <svg width="0" height="0" style={{ position: 'absolute', width: 0, height: 0 }}>
