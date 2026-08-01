@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { getBackdropUrl, getPosterUrl } from '../../../api/tmdbClient';
 import playIcon from '../../../assets/play-icon.png';
 import styles from './LiveSuggestionsBanner.module.css';
+import { useNavigationStore } from '../../../store/useNavigationStore';
 
 const LIVE_MOVIES = [
   {
@@ -51,6 +52,7 @@ const LIVE_MOVIES = [
 ];
 
 function LiveSuggestionsBanner() {
+  const playVideo = useNavigationStore((state) => state.playVideo);
   const [index, setIndex] = useState(0);
 
   const current = LIVE_MOVIES[index];
@@ -64,7 +66,8 @@ function LiveSuggestionsBanner() {
   };
 
   const handleWatch = () => {
-    console.log('Watch Live Movie:', current.title);
+    if (!current?.id) return;
+    playVideo(current.id, 'movie', true);
   };
 
   // Convert 0-10 rating to 0-5 stars
