@@ -45,4 +45,13 @@ export const tmdb = {
   search: (mediaType, query) => tmdbFetch(`/search/${mediaType}`, { query }),
   discover: (mediaType, params) => tmdbFetch(`/discover/${mediaType}`, params),
   personDetails: (id) => tmdbFetch(`/person/${id}`),
+  movieCredits: (id) => tmdbFetch(`/movie/${id}/credits`),
+  tvCredits: (id) => tmdbFetch(`/tv/${id}/credits`),
+  movieImages: (id) => tmdbFetch(`/movie/${id}/images`),
+  tvImages: (id) => tmdbFetch(`/tv/${id}/images`),
+  movieRecommendations: (id) => tmdbFetch(`/movie/${id}/recommendations`),
+  tvRecommendations: (id) => tmdbFetch(`/tv/${id}/recommendations`),
+  movieVideos: (id) => tmdbFetch(`/movie/${id}/videos`),
+  tvVideos: (id) => tmdbFetch(`/tv/${id}/videos`),
 };
+
