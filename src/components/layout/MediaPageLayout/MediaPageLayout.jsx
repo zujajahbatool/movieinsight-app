@@ -3,6 +3,7 @@ import AdvanceSearch from '../../common/AdvanceSearch/AdvanceSearch';
 import MovieCard from '../../common/MovieCard/MovieCard';
 import { tmdb, getPosterUrl } from '../../../api/tmdbClient';
 import { useWatchlistStore } from '../../../store/useWatchlistStore';
+import { useNavigationStore } from '../../../store/useNavigationStore';
 import styles from './MediaPageLayout.module.css';
 
 function MediaPageLayout({ title, mediaType = 'movie' }) {
@@ -21,6 +22,7 @@ function MediaPageLayout({ title, mediaType = 'movie' }) {
 
   const watchlist = useWatchlistStore((state) => state.watchlist);
   const toggleMovie = useWatchlistStore((state) => state.toggleMovie);
+  const setWatchNow = useNavigationStore((state) => state.setWatchNow);
 
   useEffect(() => {
     let active = true;
@@ -127,6 +129,7 @@ function MediaPageLayout({ title, mediaType = 'movie' }) {
                 genreIds={item.genre_ids}
                 isAdded={watchlist.includes(item.id)}
                 onAddToggle={() => toggleMovie(item.id)}
+                onClick={() => setWatchNow(item.id, mediaType, false)}
               />
             ))}
           </div>
