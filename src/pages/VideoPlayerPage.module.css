@@ -1,0 +1,476 @@
+.playerContainer {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background-color: #000;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+  font-family: var(--font-display), sans-serif;
+  color: #fff;
+}
+
+/* Playing badge in the absolute top left */
+.playingBadge {
+  position: absolute;
+  top: 16px;
+  left: 20px;
+  background: rgba(26, 25, 25, 0.6);
+  color: #EBFAFF;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 4px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  z-index: 100;
+  pointer-events: none;
+}
+
+/* Video Containers */
+.htmlVideo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  z-index: 1;
+}
+
+.iframeWrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background: #000;
+}
+
+.youtubeIframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  pointer-events: none; /* Block YouTube player default hover overlays */
+}
+
+/* Absolute click capture overlay above YouTube player */
+.videoClickOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  cursor: pointer;
+  background: transparent;
+  z-index: 2;
+}
+
+/* Scrim & Control Animations */
+.controlsScrim {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7) 0%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.85) 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  z-index: 10;
+  opacity: 1;
+  transition: opacity 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  pointer-events: auto;
+}
+
+.controlsShow {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.controlsHide {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* TOP ACTION BAR */
+.topBar {
+  padding: 12px 24px;
+  margin: 40px 24px 0 24px;
+  background: rgba(10, 26, 43, 0.45);
+  border: 1px solid rgba(235, 250, 255, 0.12);
+  border-radius: 999px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+}
+
+.topBarLeft {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.backBtn {
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.backBtn:hover {
+  transform: translateX(-3px);
+  opacity: 0.8;
+}
+
+.movieTitle {
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  color: #EBFAFF;
+}
+
+.topBarRight {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.navIconBtn {
+  background: none;
+  border: none;
+  color: #EBFAFF;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.85;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.navIconBtn:hover {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.topRightIcon {
+  width: 20px;
+  height: 20px;
+}
+
+/* CENTER PLAYER CONTROLS */
+.centerControls {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  gap: 48px;
+  z-index: 15;
+}
+
+.centerCtrlBtn {
+  background: none;
+  border: none;
+  color: var(--accent-blue);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.centerCtrlBtn:hover {
+  transform: scale(1.12);
+  color: #4aa3ec;
+}
+
+.centerIcon {
+  width: 44px;
+  height: 44px;
+}
+
+.centerPlayBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.centerPlayBtn:hover {
+  transform: scale(1.1);
+}
+
+.playTriangleIcon {
+  width: 72px;
+  height: 72px;
+}
+
+/* BOTTOM CONTROLS & TIMELINE */
+.bottomBar {
+  padding: 0 32px 32px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Timeline/Seek container */
+.timelineContainer {
+  position: relative;
+  width: 100%;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.timeline {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.25);
+  outline: none;
+  margin: 0;
+  cursor: pointer;
+  position: relative;
+  transition: height 0.15s ease;
+}
+
+.timelineContainer:hover .timeline {
+  height: 6px;
+}
+
+/* Chrome/Safari timeline thumb styling */
+.timeline::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--accent-blue);
+  box-shadow: 0 0 10px rgba(34, 142, 229, 0.8);
+  cursor: pointer;
+  transition: transform 0.1s ease, width 0.1s ease, height 0.1s ease;
+}
+
+.timelineContainer:hover .timeline::-webkit-slider-thumb {
+  width: 14px;
+  height: 14px;
+}
+
+/* Firefox timeline thumb styling */
+.timeline::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border: none;
+  border-radius: 50%;
+  background: var(--accent-blue);
+  box-shadow: 0 0 10px rgba(34, 142, 229, 0.8);
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+
+.timelineContainer:hover .timeline::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+}
+
+/* Custom Seek Floating Tooltip */
+.tooltip {
+  position: absolute;
+  bottom: 24px;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: none;
+  z-index: 50;
+  animation: fadeIn 0.15s ease-out;
+}
+
+.tooltipThumbnail {
+  width: 144px;
+  height: 81px; /* 16:9 */
+  border: 2px solid var(--accent-blue);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+  background: #000;
+}
+
+.tooltipImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.tooltipImgFallback {
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, #0b1e33 0%, #030a1b 100%);
+}
+
+.tooltipTime {
+  margin-top: 6px;
+  font-size: 11px;
+  color: var(--accent-blue);
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+  letter-spacing: 0.5px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+/* Bottom Actions Control Bar */
+.bottomActions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.bottomLeftActions {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.volumeWrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.actionBtn {
+  background: none;
+  border: none;
+  color: #EBFAFF;
+  cursor: pointer;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.85;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.actionBtn:hover {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.volumeSlider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 72px;
+  height: 3px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.2);
+  outline: none;
+  cursor: pointer;
+}
+
+.volumeSlider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #EBFAFF;
+  cursor: pointer;
+}
+
+.volumeSlider::-moz-range-thumb {
+  width: 10px;
+  height: 10px;
+  border: none;
+  border-radius: 50%;
+  background: #EBFAFF;
+  cursor: pointer;
+}
+
+.timeLabel {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  color: rgba(235, 250, 255, 0.8);
+  font-variant-numeric: tabular-nums;
+}
+
+.bottomRightActions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Pre-loading Spinner Screen */
+.loadingScreen {
+  width: 100vw;
+  height: 100vh;
+  background: #030a1b;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  color: #EBFAFF;
+  font-family: var(--font-display), sans-serif;
+}
+
+.spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid rgba(34, 142, 229, 0.15);
+  border-left-color: var(--accent-blue);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.backLink {
+  background: none;
+  border: 1px solid rgba(235, 250, 255, 0.2);
+  color: #EBFAFF;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  transition: background 0.2s ease;
+}
+
+.backLink:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
