@@ -47,7 +47,7 @@
   --fs-md: 1rem;
   --fs-lg: 1.25rem;
   --fs-xl: 1.5rem;
-  --fs-2xl: 2rem;
+  --fs-2xl: 2.5rem;
   --fs-3xl: clamp(2rem, 4vw, 3rem); /* Figma's 48px, but responsive */
   --fw-medium: 500;
   --fw-bold: 700;
